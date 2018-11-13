@@ -1,0 +1,18 @@
+{
+    "songs": [
+        {
+            "id": 1,
+            "title": "Hello",
+            "artistId": 1,
+            "artistName": "Lionel Ritchie",
+            "genre": "pop"
+        },
+        {
+            "id": 2,
+            "title": "World",
+            "artistId": 2,
+            "artistName": "Nora Jones",
+            "genre": "jazz"
+        }
+    ]
+}
