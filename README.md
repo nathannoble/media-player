@@ -7,8 +7,8 @@ Media Player in Node.js, Express, Redux and React
 
 ### To Run:
 * Clone the repo
-* run npm install
 * cd to media-player/backend
+* run npm install
 * run node server.js
 
 ### Sample API calls
