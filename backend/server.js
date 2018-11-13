@@ -11,6 +11,7 @@ app.use(function (req, res, next) {
 
 app.use('/api/v1', require('./api/v1'));
 app.use('/api/v2', require('./api/v2'));
+app.use('/media', require('./api/media'));
 // ..other routes here
 
 app.get('/', function (req, res) {
