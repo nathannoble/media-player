@@ -28,3 +28,8 @@ Media Player in Node.js, Express, Redux and React
 * Add auth (i.e. user registration and sign on to restrict access)
 * Add security (i.e. Use TLS, Helmet, protect session cookies, CSRF, etc.)
 * Other features
+
+
+## Building the front-end
+$ cd media-player
+$ npx create-react-app frontent
