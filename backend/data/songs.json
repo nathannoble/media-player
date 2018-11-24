@@ -2,17 +2,23 @@
     "songs": [
         {
             "id": 1,
-            "title": "Hello",
+            "title": "Fur Elise",
             "artistId": 1,
-            "artistName": "Lionel Ritchie",
-            "genre": "pop"
+            "artistName": "Beethoven",
+            "genre": "Classical",
+            "location": "hello.mp3",
+            "album": "The Best of Beethoven",
+            "albumArt": "albumArt.jpg"
         },
         {
             "id": 2,
-            "title": "World",
+            "title": "Short Skirt",
             "artistId": 2,
-            "artistName": "Nora Jones",
-            "genre": "jazz"
+            "artistName": "Cake",
+            "genre": "Alternative",
+            "location": "world.m4a",
+            "album": "Comfort Eagle",
+            "albumArt": "world.jpg"
         }
     ]
 }

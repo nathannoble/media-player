@@ -33,3 +33,7 @@ Media Player in Node.js, Express, Redux and React
 ## Building the front-end
 $ cd media-player
 $ npx create-react-app frontent
+$ npm install @material-ui/core
+$ npm install --save-dev redux
+$ npm install --save-dev react-redux
+$ npm install @material-ui/icons

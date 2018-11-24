@@ -1,44 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  # Requirements
+  The assignment consists of building an Audio library/player 📻:
+  The backend will serve the library (list of songs with metadata), while
+  the frontend will display the library and play the songs.
 
-## Available Scripts
+  You'll be building this in two steps with discussion in between:
+  Step 1 covers the skeleton of backend and takes ~1.5 hours
+  Step 2 is about actually building it out and takes ~4 hours
 
-In the project directory, you can run:
+  Backend:
+  The backend should be written in Node.js and would be used as an API for serving songs and songs metadata.
 
-### `npm start`
+  Frontend:
+  The frontend should be written in React and use some UI library to help the task (Material-ui preferred but any other clean UI lib can be used).
+  The "app" should be a single page app which should display the complete music library and a player (think about a very simple iTunes).
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  Storage of songs/metadata:
+  Songs can be stored in a directory in the backend.
+  Metadata can be stored as JSON in a directory in the backend
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+  Bonus:
+  Any bonus will be valued when we will review your code.
 
-### `npm test`
+  How to score bonus points during the test:
+  Frontend uses Redux.
+  Songs are stored/retrieved from some network storage (dropbox, drive, s3).
+  Metadata could be fetched from some external API instead of being statically stored in a JSON file.
+  Usage of websockets in order to implement some live information on what other users are listening (you are free to display that however you prefer).
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  ## Assignment:
+  Time: 4-5h
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+  Build the frontend of the app and modify the backend to support all the functionality mentioned in the spect above.
+ Websocket implementation for live "What others are listening to"

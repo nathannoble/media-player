@@ -7,7 +7,7 @@ media.get('/', function (req, res) {
 });
 
 media.get('/:title', function(req,res){
-	var filename = './media/' + req.params.title + ".mp3"; 
+	var filename = './media/' + req.params.title; 
 	fs.exists(filename,function(exists){
 		if(exists)
 		{
