@@ -54,6 +54,30 @@ class MediaControl extends Component {
         this.play = this.play.bind(this);
         this.pause = this.pause.bind(this);
         this.initMedia = this.initMedia.bind(this)
+        this.playAudio = this.playAudio.bind(this);
+        this.pauseAudio = this.pauseAudio.bind(this);
+    }
+
+    // Also send a socket message to register playing audio for this user
+    playAudio(){
+        this.audio.play()
+
+        // Data to send to socket
+        var data = Object.assign({}, this.props.media.currentMedia)
+        data.userId = this.props.userId
+        this.props.socket.emit('play', data)
+    }
+
+    // Also send a socket message to register paused audio for this user
+    pauseAudio(){
+        this.audio.pause()
+
+        // Data to send to socket
+        const data = {
+            mediaId: this.props.media.currentMedia.id,
+            userId: this.props.userId
+        }
+        this.props.socket.emit('pause', data)
     }
 
 
@@ -69,22 +93,22 @@ class MediaControl extends Component {
         // Perform action based on song state
         if (config.MEDIA_SERVICE + song.location === this.url) {
             if(song.isPlaying === true){
-                this.audio.play()
+                this.playAudio()
             }else{
-                this.audio.pause()
+                this.pauseAudio()
             }
         } else {
             let isDefaultSong = this.url == null
             this.url = config.MEDIA_SERVICE + song.location;
             if (this.audio) {
-                this.audio.pause()
+                this.pauseAudio()
                 this.audio = null
             }
 
             this.audio = new Audio(this.url);
             
             if(!isDefaultSong){
-                this.audio.play()
+                this.playAudio()
             }
         }
 

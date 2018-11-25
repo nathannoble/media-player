@@ -17,6 +17,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MediaList from '../components/mediaList'
 import MediaControl from './mediaControl'
 import * as config from '../config';
+import openSocket from 'socket.io-client';
 
 const drawerWidth = 340;
 
@@ -82,15 +83,21 @@ const styles = theme => ({
 
 class Layout extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             open: false,
+            userId: null
         };
         this.fetchMediaList = this.fetchMediaList.bind(this)
-    }
+        this.socket = openSocket(config.WS_SERVICE)
 
-    
+        this.socket.on('welcome', (uuid) => {
+            if (this.state.userId) return
+            this.setState({ userId: uuid })
+        });
+
+    }
 
     handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -117,7 +124,8 @@ class Layout extends React.Component {
 
     render() {
         const { classes, theme } = this.props;
-        const { open } = this.state;
+        const { open, userId } = this.state;
+        const socket = this.socket;
 
         return (
             <div className={classes.root}>
@@ -172,7 +180,7 @@ class Layout extends React.Component {
                     })}
                 >
                     <div className={classes.drawerHeader} />
-                    <MediaControl></MediaControl>
+                    <MediaControl socket={socket} userId={userId}></MediaControl>
                 </main>
             </div>
         );
