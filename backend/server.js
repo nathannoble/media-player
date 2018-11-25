@@ -28,12 +28,22 @@ if (!module.parent) {
 //////////////
 var playingNowData = [];
 
+// Cleanup
+setInterval(function () {
+    for (var i = 0; i <= playingNowData.length - 1; i++) {
+        let socketId = playingNowData[i].userId;
+        let expired = true
+        // TODO: Remove expired songs
+    }
+}, 15000)
+
 
 const io = require('socket.io')()
 io.on('connection', function (socket) {
     console.log("connected! " + socket.id);
 
     io.emit('welcome', socket.id)
+    io.emit("nowPlayingListChanged", playingNowData)
 
     socket.on('play', function (data) {
         if (addToPlayingData(data) === true) {
@@ -48,9 +58,8 @@ io.on('connection', function (socket) {
     })
 
     socket.on('disconnect', function () {
-        if (removeFromPlayingData(socket.id) === true) {
-            io.emit("nowPlayingListChanged", playingNowData)
-        }
+        removeFromPlayingData(socket.id)
+        io.emit("nowPlayingListChanged", playingNowData)
     })
 
 })
