@@ -17,7 +17,7 @@ import * as config from '../config';
 const styles = theme => ({
     card: {
         display: 'flex',
-        // width: 360
+        width: 316
     },
     details: {
         display: 'flex',
@@ -199,8 +199,6 @@ class MediaControl extends Component {
                             <IconButton aria-label="Play" onClick={this.play}>
                                 <PlayArrowIcon className={classes.playIcon} />
                             </IconButton>}
-
-
                         <IconButton aria-label="Next" onClick={this.playNext}>
                             {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
                         </IconButton>
@@ -209,7 +207,7 @@ class MediaControl extends Component {
                 <CardMedia
                     className={classes.cover}
                     image={"/images/" + currentSong.albumArt}
-                    title="Live from space album cover"
+                    title={currentSong.album}
                 />
             </Card>
         );

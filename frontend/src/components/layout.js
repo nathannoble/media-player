@@ -101,8 +101,8 @@ class Layout extends React.Component {
 
         var self = this
         this.socket.on('nowPlayingListChanged', (data) => {
-            
-            if(data.length === 0) {
+
+            if (data.length === 0) {
                 this.props.setNowPlayingList([])
                 return
             }
@@ -193,19 +193,20 @@ class Layout extends React.Component {
                     <MediaList></MediaList>
 
                     <Divider />
-                    <Typography noWrap>
-                        Others are currently playing...
+                    <div className='now-playing'>
+                        <Typography variant="h6" color="inherit" noWrap>
+                            Others are currently playing...
                     </Typography>
+                    </div>
                     <NowPlayingList></NowPlayingList>
                 </Drawer>
-                <main
-                    className={classNames(classes.content, {
+                <main className={classNames(classes.content, {
                         [classes.contentShift]: open,
-                    })}
-                >
+                    })}>
                     <div className={classes.drawerHeader} />
                     <MediaControl socket={socket} userId={userId}></MediaControl>
                 </main>
+                
             </div>
         );
     }

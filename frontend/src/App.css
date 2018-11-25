@@ -30,3 +30,8 @@
     transform: rotate(360deg);
   }
 }
+
+.now-playing{
+  align-self: center;
+  color: #3F51B5;
+}
