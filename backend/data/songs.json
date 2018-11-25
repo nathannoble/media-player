@@ -19,6 +19,16 @@
             "location": "world.m4a",
             "album": "Comfort Eagle",
             "albumArt": "world.jpg"
+        },
+        {
+            "id": 3,
+            "title": "Muskrat Love",
+            "artistId": 3,
+            "artistName": "America",
+            "genre": "Folk",
+            "location": "love.mp3",
+            "album": "America",
+            "albumArt": "love.jpg"
         }
     ]
 }

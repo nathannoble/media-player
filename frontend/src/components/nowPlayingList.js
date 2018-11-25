@@ -8,7 +8,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import PlayIcon from '@material-ui/icons/PlayCircleOutline';
-import PauseIcon from '@material-ui/icons/PauseCircleOutline';
+import PauseIcon from '@material-ui/icons/PauseCircleFilled';
 import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
