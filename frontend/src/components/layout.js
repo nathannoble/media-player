@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,10 +14,12 @@ import AppIcon from '@material-ui/icons/MusicNote';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import MediaList from '../components/mediaList'
-import MediaControl from './mediaControl'
+import MediaList from '../components/mediaList';
+import MediaControl from './mediaControl';
+import NowPlayingList from './nowPlayingList';
 import * as config from '../config';
 import openSocket from 'socket.io-client';
+import nowPlayingList from './nowPlayingList';
 
 const drawerWidth = 340;
 
@@ -97,6 +99,28 @@ class Layout extends React.Component {
             this.setState({ userId: uuid })
         });
 
+        var self = this
+        this.socket.on('nowPlayingListChanged', (data) => {
+            
+            if(data.length === 0) {
+                this.props.setNowPlayingList([])
+                return
+            }
+
+            // Sanitize the data here
+            // Remove those from this user
+            var temp = data.filter(d => d.userId !== this.state.userId)
+            // Remove duplicate mediaId
+            temp = temp.filter((o, index, self) =>
+                index === self.findIndex((m) => (
+                    m.id === o.id
+                ))
+            )
+
+            console.log(temp)
+
+            this.props.setNowPlayingList(temp)
+        });
     }
 
     handleDrawerOpen = () => {
@@ -172,7 +196,7 @@ class Layout extends React.Component {
                     <Typography noWrap>
                         Others are currently playing...
                     </Typography>
-                    <MediaList></MediaList>
+                    <NowPlayingList></NowPlayingList>
                 </Drawer>
                 <main
                     className={classNames(classes.content, {
@@ -202,6 +226,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         initMediaList: mediaList => dispatch({ type: 'INIT_MEDIA_LIST', mediaList: mediaList }),
+        setNowPlayingList: nowPlayingList => dispatch({ type: 'SET_NOW_PLAYING_LIST', nowPlayingList: nowPlayingList }),
     };
 };
 

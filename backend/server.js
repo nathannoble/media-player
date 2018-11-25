@@ -36,17 +36,21 @@ io.on('connection', function (socket) {
     io.emit('welcome', socket.id)
 
     socket.on('play', function (data) {
-        addToPlayingData(data)
-        io.emit("playing", playingNowData)
+        if (addToPlayingData(data) === true) {
+            io.emit("nowPlayingListChanged", playingNowData)
+        }
     })
 
     socket.on('pause', function (data) {
-        removeFromPlayingData(data.userId)
-        io.emit("playing", playingNowData)
+        if (removeFromPlayingData(data.userId) === true) {
+            io.emit("nowPlayingListChanged", playingNowData)
+        }
     })
 
     socket.on('disconnect', function () {
-        removeFromPlayingData(socket.id)
+        if (removeFromPlayingData(socket.id) === true) {
+            io.emit("nowPlayingListChanged", playingNowData)
+        }
     })
 
 })
@@ -56,23 +60,39 @@ io.listen(wsPort)
 console.log(`Socket listening on port ${wsPort}!`);
 
 
-function addToPlayingData(data){
+function addToPlayingData(data) {
     console.log("Adding media with ID : " + data.id)
+
+    // See if it is already there
+    const temp = playingNowData.filter(d => d.userId === data.userId && d.id === data.id)
+    if (temp.length > 0) {
+        return false
+    }
 
     // Add to playing data 
     playingNowData.push(data)
     showNowplaying()
+    return true
 }
 
-function removeFromPlayingData(userId){
-    console.log("Removing: " + userId)
+function removeFromPlayingData(userId) {
+    if (userId) {
+        console.log("Removing: " + userId)
 
-    // Remove based on userId
-    playingNowData = playingNowData.filter(d => d.userId !== userId)
-    showNowplaying()
+        // See if there is anything to remove
+        // Remove based on userId
+        const temp = playingNowData.filter(d => d.userId === userId)
+        if (temp.length > 0) {
+            playingNowData = playingNowData.filter(d => d.userId !== userId)
+            showNowplaying()
+            return true
+        }
+    }
+
+    return false
 }
 
-function showNowplaying(){
+function showNowplaying() {
     console.log("Now playing:")
     console.log(playingNowData)
 }
