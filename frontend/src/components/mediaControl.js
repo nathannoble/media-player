@@ -56,10 +56,12 @@ class MediaControl extends Component {
         this.initMedia = this.initMedia.bind(this)
         this.playAudio = this.playAudio.bind(this);
         this.pauseAudio = this.pauseAudio.bind(this);
+        this.playNext = this.playNext.bind(this);
+        this.playPrevious = this.playPrevious.bind(this);
     }
 
     // Also send a socket message to register playing audio for this user
-    playAudio(){
+    playAudio() {
         this.audio.play()
 
         // Data to send to socket
@@ -69,7 +71,7 @@ class MediaControl extends Component {
     }
 
     // Also send a socket message to register paused audio for this user
-    pauseAudio(){
+    pauseAudio() {
         this.audio.pause()
 
         // Data to send to socket
@@ -83,18 +85,18 @@ class MediaControl extends Component {
 
     initMedia() {
         let song = this.props.media.currentMedia
-        
+
         // Make sure we have a player
-        if(this.audio == null){
+        if (this.audio == null) {
             this.url = config.MEDIA_SERVICE + song.location;
             this.audio = new Audio(this.url);
         }
 
         // Perform action based on song state
         if (config.MEDIA_SERVICE + song.location === this.url) {
-            if(song.isPlaying === true){
+            if (song.isPlaying === true) {
                 this.playAudio()
-            }else{
+            } else {
                 this.pauseAudio()
             }
         } else {
@@ -106,8 +108,8 @@ class MediaControl extends Component {
             }
 
             this.audio = new Audio(this.url);
-            
-            if(!isDefaultSong){
+
+            if (!isDefaultSong) {
                 this.playAudio()
             }
         }
@@ -118,14 +120,49 @@ class MediaControl extends Component {
         // Update media state
         let song = this.props.media.currentMedia
         song.isPlaying = true
-        this.props.updateMedia(song)
+        this.props.setCurrent(song)
     }
 
     pause() {
         // Update media state
         let song = this.props.media.currentMedia
         song.isPlaying = false
-        this.props.updateMedia(song)
+        this.props.setCurrent(song)
+    }
+
+    playNext() {
+        let curr = this.props.media.currentMedia
+        let mediaList = this.props.media.mediaList
+        // Get the index of this current song
+        let index = mediaList.findIndex(m => m.id === curr.id) + 1
+        let song = mediaList[index]
+
+        if (song) {
+            song.isPlaying = true
+            this.props.setCurrent(song)
+        }else{
+            song = mediaList[0]
+            song.isPlaying = true
+            this.props.setCurrent(song)
+        }
+    }
+
+
+    playPrevious() {
+        let curr = this.props.media.currentMedia
+        let mediaList = this.props.media.mediaList
+        // Get the index of this current song
+        let index = mediaList.findIndex(m => m.id === curr.id) - 1
+        let song = mediaList[index]
+
+        if (song) {
+            song.isPlaying = true
+            this.props.setCurrent(song)
+        }else{
+            song = mediaList[mediaList.length-1]
+            song.isPlaying = true
+            this.props.setCurrent(song)
+        }
     }
 
     render() {
@@ -152,7 +189,7 @@ class MediaControl extends Component {
                         </Typography>
                     </CardContent>
                     <div className={classes.controls}>
-                        <IconButton aria-label="Previous">
+                        <IconButton aria-label="Previous" onClick={this.playPrevious}>
                             {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
                         </IconButton>
                         {currentSong.isPlaying ?
@@ -164,7 +201,7 @@ class MediaControl extends Component {
                             </IconButton>}
 
 
-                        <IconButton aria-label="Next">
+                        <IconButton aria-label="Next" onClick={this.playNext}>
                             {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
                         </IconButton>
                     </div>
@@ -194,7 +231,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateMedia: media => dispatch({ type: 'SET_CURRENT_MEDIA', media: media }),
+        setCurrent: media => dispatch({ type: 'SET_CURRENT_MEDIA', media: media }),
     };
 };
 
